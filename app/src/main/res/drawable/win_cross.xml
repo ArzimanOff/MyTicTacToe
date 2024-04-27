@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="50dp"
+    android:height="50dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Фоновый цвет с скруглением углов -->
+    <path
+        android:pathData="M 0,10 Q 0,0 10,0 L 90,0 Q 100,0 100,10 L 100,90 Q 100,100 90,100 L 10,100 Q 0,100 0,90 Z"
+        android:fillColor="#4D2196F3"/> <!-- Здесь можно указать любой желаемый цвет фона и значение fillType -->
+
+    <!-- Крестик -->
+    <group android:name="cross_group">
+
+        <!-- Горизонтальная линия -->
+        <path
+            android:strokeWidth="10"
+            android:strokeColor="#2196F3"
+            android:strokeLineCap="round"
+            android:pathData="M 10,10 L 90,90" />
+
+        <!-- Вертикальная линия -->
+        <path
+            android:strokeWidth="10"
+            android:strokeColor="#2196F3"
+            android:strokeLineCap="round"
+            android:pathData="M 90,10 L 10,90" />
+    </group>
+</vector>

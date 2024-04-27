@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.arziman_off.mytictactoe"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.arziman_off.mytictactoe"

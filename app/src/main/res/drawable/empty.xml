@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="50dp"
+    android:height="50dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Фоновый цвет с скруглением углов и внутренней границей -->
+    <path
+        android:pathData="M 2,12 Q 2,2 12,2 L 88,2 Q 98,2 98,12 L 98,88 Q 98,98 88,98 L 12,98 Q 2,98 2,88 Z"
+        android:fillColor="@color/bg_color"
+        android:strokeColor="#F4F4F4"
+        android:strokeWidth="2"/> <!-- Здесь толщина границы равна 4 пикселя -->
+
+</vector>
