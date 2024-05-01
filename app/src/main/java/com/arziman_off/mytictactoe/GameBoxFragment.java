@@ -20,7 +20,6 @@ public class GameBoxFragment extends Fragment {
     private final int rightPlayerMark = R.drawable.circle;
     private final GameSettings settings = new GameSettings(leftPlayerMark, rightPlayerMark);
     private final Game game = new Game(settings);
-
     private final ImageView[][] cells = new ImageView[3][3];
 
     @Override
@@ -43,9 +42,7 @@ public class GameBoxFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_board, container, false);
-
         GridLayout gridLayout = view.findViewById(R.id.gridLayout);
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String cellId = "cell_" + i + j;
@@ -53,10 +50,7 @@ public class GameBoxFragment extends Fragment {
                 cells[i][j] = view.findViewById(resId);
             }
         }
-
-
         setCellClickListeners();
-
         return view;
     }
 
@@ -76,10 +70,8 @@ public class GameBoxFragment extends Fragment {
                                     (thisPlayer.equals(game.getPlayerLeft())) ?
                                             (game.getPlayerRight()) : (game.getPlayerLeft())
                             );
-                            ImageView imageView = getActivity().findViewById(R.id.next_step_mark);
-                            imageView.setImageResource(game.getCurrentStep().getMark());
-
-
+                            ImageView nextStepMark = getActivity().findViewById(R.id.next_step_mark);
+                            nextStepMark.setImageResource(game.getCurrentStep().getMark());
                             thisMarksArray[finalI][finalJ] = thisPlayer.getId();
                             game.setMarksArray(thisMarksArray);
 

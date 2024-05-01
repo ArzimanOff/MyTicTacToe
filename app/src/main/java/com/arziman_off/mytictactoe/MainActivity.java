@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
                 startGame(savedInstanceState);
             }
         });
-
-
-
     }
 
     private void startGame(Bundle savedInstanceState){
+        ImageView nextStepMark = findViewById(R.id.next_step_mark);
+        nextStepMark.setImageResource(R.drawable.cross);
+
         sharedGameViewModel = new ViewModelProvider(this).get(SharedGameViewModel.class);
 
         RelativeLayout nextStepInfoBox = findViewById(R.id.next_step_info_box);
@@ -45,11 +45,5 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, new GameBoxFragment())
                     .commit();
         }
-    }
-
-    public void changeCurrentStepMark(){
-        ImageView nextStepMark = findViewById(R.id.next_step_mark);
-        int currentMark = sharedGameViewModel.getGame().getCurrentStep().getMark();
-        nextStepMark.setImageResource(currentMark);
     }
 }
