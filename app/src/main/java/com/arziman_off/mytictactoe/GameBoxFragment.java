@@ -16,12 +16,12 @@ import java.util.List;
 
 public class GameBoxFragment extends Fragment {
 
-    private int leftPlayerMark = R.drawable.cross;
-    private int rightPlayerMark = R.drawable.circle;
-    private GameSettings settings = new GameSettings(leftPlayerMark, rightPlayerMark);
-    private Game game = new Game(settings);
+    private final int leftPlayerMark = R.drawable.cross;
+    private final int rightPlayerMark = R.drawable.circle;
+    private final GameSettings settings = new GameSettings(leftPlayerMark, rightPlayerMark);
+    private final Game game = new Game(settings);
 
-    private ImageView[][] cells = new ImageView[3][3];
+    private final ImageView[][] cells = new ImageView[3][3];
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -46,7 +46,6 @@ public class GameBoxFragment extends Fragment {
 
         GridLayout gridLayout = view.findViewById(R.id.gridLayout);
 
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String cellId = "cell_" + i + j;
@@ -54,6 +53,7 @@ public class GameBoxFragment extends Fragment {
                 cells[i][j] = view.findViewById(resId);
             }
         }
+
 
         setCellClickListeners();
 
@@ -71,6 +71,7 @@ public class GameBoxFragment extends Fragment {
                         Player thisPlayer = game.getCurrentStep();
                         int[][] thisMarksArray = game.getMarksArray();
                         if (thisMarksArray[finalI][finalJ] == 0 && game.isGameIsValid()) {
+
                             cells[finalI][finalJ].setImageResource(thisPlayer.getMark());
                             game.setCurrentStep(
                                     (thisPlayer.equals(game.getPlayerLeft())) ?
@@ -79,10 +80,10 @@ public class GameBoxFragment extends Fragment {
                             thisMarksArray[finalI][finalJ] = thisPlayer.getId();
                             game.setMarksArray(thisMarksArray);
 
-                            if (game.checkWin() == Game.CROSS){
+                            if (game.checkWinner() == Game.CROSS){
                                 game.setWinner(game.getPlayerLeft());
                                 endCurrentGame();
-                            } else if (game.checkWin() == Game.CIRCLE) {
+                            } else if (game.checkWinner() == Game.CIRCLE) {
                                 game.setWinner(game.getPlayerRight());
                                 endCurrentGame();
                             }
@@ -107,4 +108,5 @@ public class GameBoxFragment extends Fragment {
         System.out.println(game.getWinner().getId());
         game.setGameIsValid(false);
     }
+
 }

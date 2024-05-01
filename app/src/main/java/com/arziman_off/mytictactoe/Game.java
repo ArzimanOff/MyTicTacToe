@@ -8,13 +8,13 @@ public class Game {
     public static final int CROSS = 1;
     public static final int CIRCLE = 2;
     private boolean gameIsValid;
-    private Player playerLeft;
-    private Player playerRight;
-    private GameSettings settings;
+    private final Player playerLeft;
+    private final Player playerRight;
+    private final GameSettings settings;
     private Player currentStep;
     private Player winner;
     private int[][] marksArray = new int[3][3];
-    private List<int[]> indexesOfWinningCells = new ArrayList<>();
+    private final List<int[]> indexesOfWinningCells = new ArrayList<>();
     public Game(GameSettings settings) {
         this.gameIsValid = true;
         this.playerLeft = new Player(CROSS, settings.getLeftPlayerMarkId());
@@ -23,7 +23,7 @@ public class Game {
         this.settings = settings;
     }
 
-    int checkWin() {
+    int checkWinner() {
         for (int i = 0; i < 3; i++) {
             if (marksArray[i][0] != EMPTY &&
                     marksArray[i][0] == marksArray[i][1] &&

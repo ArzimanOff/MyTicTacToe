@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyTicTacToe</string>
+    <string name="btn_start_game_text">Начать игру</string>
+    <string name="tv_next_step_text">Следующий ход:</string>
 </resources>
