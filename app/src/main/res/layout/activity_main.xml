@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/next_step_info_box"
@@ -13,6 +14,7 @@
         android:background="@drawable/rounded_white_bg"
         android:padding="20dp"
         android:visibility="gone"
+        tools:visibility="visible"
         >
 
         <TextView
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/cross" />
+            tools:src="@drawable/cross" />
 
     </RelativeLayout>
 

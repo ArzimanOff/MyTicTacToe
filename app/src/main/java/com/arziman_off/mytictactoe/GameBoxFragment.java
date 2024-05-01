@@ -71,12 +71,15 @@ public class GameBoxFragment extends Fragment {
                         Player thisPlayer = game.getCurrentStep();
                         int[][] thisMarksArray = game.getMarksArray();
                         if (thisMarksArray[finalI][finalJ] == 0 && game.isGameIsValid()) {
-
                             cells[finalI][finalJ].setImageResource(thisPlayer.getMark());
                             game.setCurrentStep(
                                     (thisPlayer.equals(game.getPlayerLeft())) ?
                                             (game.getPlayerRight()) : (game.getPlayerLeft())
                             );
+                            ImageView imageView = getActivity().findViewById(R.id.next_step_mark);
+                            imageView.setImageResource(game.getCurrentStep().getMark());
+
+
                             thisMarksArray[finalI][finalJ] = thisPlayer.getId();
                             game.setMarksArray(thisMarksArray);
 
