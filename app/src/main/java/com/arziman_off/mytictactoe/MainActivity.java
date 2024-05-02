@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 window.setStatusBarContrastEnforced(true);
@@ -43,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startGame(Bundle savedInstanceState){
+    private void startGame(Bundle savedInstanceState) {
         ImageView nextStepMark = findViewById(R.id.next_step_mark);
         nextStepMark.setImageResource(R.drawable.cross);
+        makeWinnerInfoBoxDefault();
 
         sharedGameViewModel = new ViewModelProvider(this).get(SharedGameViewModel.class);
 
@@ -67,4 +68,12 @@ public class MainActivity extends AppCompatActivity {
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
+    private void makeWinnerInfoBoxDefault(){
+        RelativeLayout winnerInfoBox = findViewById(R.id.winner_info_box);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) winnerInfoBox.getLayoutParams();
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        params.setMargins(params.leftMargin, ViewGroup.LayoutParams.WRAP_CONTENT, params.rightMargin, params.bottomMargin);
+        winnerInfoBox.setLayoutParams(params);
+        winnerInfoBox.setVisibility(View.GONE);
+    }
 }

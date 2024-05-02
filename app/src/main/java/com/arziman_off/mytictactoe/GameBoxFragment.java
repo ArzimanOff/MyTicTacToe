@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +25,7 @@ public class GameBoxFragment extends Fragment {
     private final GameSettings settings = new GameSettings(leftPlayerMark, rightPlayerMark);
     private final Game game = new Game(settings);
     private final ImageView[][] cells = new ImageView[3][3];
-
+    private ImageView nextStepMark;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -70,16 +74,22 @@ public class GameBoxFragment extends Fragment {
                                     (thisPlayer.equals(game.getPlayerLeft())) ?
                                             (game.getPlayerRight()) : (game.getPlayerLeft())
                             );
-                            ImageView nextStepMark = getActivity().findViewById(R.id.next_step_mark);
+                            nextStepMark = getActivity().findViewById(R.id.next_step_mark);
                             nextStepMark.setImageResource(game.getCurrentStep().getMark());
                             thisMarksArray[finalI][finalJ] = thisPlayer.getId();
                             game.setMarksArray(thisMarksArray);
 
-                            if (game.checkWinner() == Game.CROSS){
-                                game.setWinner(game.getPlayerLeft());
-                                endCurrentGame();
-                            } else if (game.checkWinner() == Game.CIRCLE) {
-                                game.setWinner(game.getPlayerRight());
+                            if (!gameAreaFull() || game.checkWinner() != 0){
+                                if (game.checkWinner() == Game.CROSS){
+                                    game.setWinner(game.getPlayerLeft());
+                                    endCurrentGame();
+                                } else if (game.checkWinner() == Game.CIRCLE) {
+                                    game.setWinner(game.getPlayerRight());
+                                    endCurrentGame();
+                                }
+                            } else if (gameAreaFull() && game.checkWinner() == 0){
+                                // ничья
+                                game.setDrawnGame(true);
                                 endCurrentGame();
                             }
                         }
@@ -89,19 +99,67 @@ public class GameBoxFragment extends Fragment {
         }
     }
 
-    private void endCurrentGame() {
-        List<int[]> indexes = game.getIndexesOfWinningCells();
-
-        for (int i = 0; i < 3 && i < indexes.size(); i++) {
-            int[] pair = indexes.get(i);
-            if (game.getWinner().getId() == 1){
-                cells[pair[0]][pair[1]].setImageResource(R.drawable.win_cross);
-            } else {
-                cells[pair[0]][pair[1]].setImageResource(R.drawable.win_circle);
+    private boolean gameAreaFull(){
+        int[][] gameCells = game.getMarksArray();
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++) {
+                // если хотя бы одна клетка пуста ( =0 ), то return false
+                if (gameCells[i][j] == 0){
+                    return false;
+                }
             }
         }
-        System.out.println(game.getWinner().getId());
+        return true;
+    }
+
+    private void endCurrentGame() {
+        getActivity().findViewById(R.id.next_step_info_box).setVisibility(View.GONE);
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_animation);
+        if (!game.isDrawnGame()){
+            List<int[]> indexes = game.getIndexesOfWinningCells();
+
+            for (int i = 0; i < 3 && i < indexes.size(); i++) {
+                int[] pair = indexes.get(i);
+                if (game.getWinner().getId() == Game.CROSS){
+                    cells[pair[0]][pair[1]].setImageResource(R.drawable.win_cross);
+                } else {
+                    cells[pair[0]][pair[1]].setImageResource(R.drawable.win_circle);
+                }
+            }
+        }
+
+        RelativeLayout winnerInfoBox = getActivity().findViewById(R.id.winner_info_box);
+        ImageView winnerInfoBoxMark = getActivity().findViewById(R.id.winner_info_box_mark);
+        TextView winnerInfoBoxText = getActivity().findViewById(R.id.winner_info_box_text);
+
+        winnerInfoBox.startAnimation(anim);
+        RelativeLayout.LayoutParams winnerInfoBoxParams = getNewLayoutParams(winnerInfoBox);
+        winnerInfoBox.setLayoutParams(winnerInfoBoxParams);
+        if (game.isDrawnGame()){
+            winnerInfoBoxMark.setVisibility(View.GONE);
+            winnerInfoBoxText.setText(R.string.drawn_game_text);
+        } else {
+            winnerInfoBoxMark.setImageResource(game.getWinner().getMark());
+        }
+        winnerInfoBox.setVisibility(View.VISIBLE);
+
         game.setGameIsValid(false);
+    }
+
+    @NonNull
+    private RelativeLayout.LayoutParams getNewLayoutParams(RelativeLayout winnerInfoBox) {
+        RelativeLayout.LayoutParams winnerInfoBoxParams = (RelativeLayout.LayoutParams) winnerInfoBox.getLayoutParams();
+        winnerInfoBoxParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        float density = getResources().getDisplayMetrics().density;
+        int marginTopInDp = 40;
+        int marginTopInPixels = (int) (marginTopInDp * density);
+        winnerInfoBoxParams.setMargins(
+                winnerInfoBoxParams.leftMargin,
+                marginTopInPixels,
+                winnerInfoBoxParams.rightMargin,
+                winnerInfoBoxParams.bottomMargin
+        );
+        return winnerInfoBoxParams;
     }
 
 }

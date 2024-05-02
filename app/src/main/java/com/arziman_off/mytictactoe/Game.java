@@ -13,6 +13,7 @@ public class Game {
     private final GameSettings settings;
     private Player currentStep;
     private Player winner;
+    private boolean drawnGame = false;
     private int[][] marksArray = new int[3][3];
     private final List<int[]> indexesOfWinningCells = new ArrayList<>();
     public Game(GameSettings settings) {
@@ -129,6 +130,14 @@ public class Game {
 
     public void setCurrentStep(Player currentStep) {
         this.currentStep = currentStep;
+    }
+
+    public boolean isDrawnGame() {
+        return drawnGame;
+    }
+
+    public void setDrawnGame(boolean drawnGame) {
+        this.drawnGame = drawnGame;
     }
 }
 
