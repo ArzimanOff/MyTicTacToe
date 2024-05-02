@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,14 +20,36 @@ import androidx.lifecycle.ViewModelProvider;
 public class MainActivity extends AppCompatActivity {
 
     SharedGameViewModel sharedGameViewModel;
-
+    FrameLayout fragmentContainer;
+    Button startGameButton;
+    Button restartGameButton;
+    Animation btnToUp;
+    Animation btnToDown;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setStatusBarTheme();
-        Button startGameButton = findViewById(R.id.start_game_button);
-        startGameButton.setOnClickListener(v -> startGame(savedInstanceState));
+        startGameButton = findViewById(R.id.start_game_button);
+        restartGameButton = findViewById(R.id.restart_game_button);
+        startGameButton.setOnClickListener(v -> {
+            hideBtn(startGameButton);
+            displayBtn(restartGameButton);
+            startGame(savedInstanceState);
+        });
+        restartGameButton.setOnClickListener(v -> startGame(savedInstanceState));
+    }
+
+    private void hideBtn(Button btn) {
+        btnToDown = AnimationUtils.loadAnimation(this, R.anim.move_to_down);
+        btn.startAnimation(btnToDown);
+        btn.setVisibility(View.GONE);
+    }
+
+    private void displayBtn(Button btn) {
+        btnToUp = AnimationUtils.loadAnimation(this, R.anim.move_to_up);
+        btn.startAnimation(btnToUp);
+        btn.setVisibility(View.VISIBLE);
     }
 
     private void setStatusBarTheme() {
@@ -44,24 +68,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame(Bundle savedInstanceState) {
-        ImageView nextStepMark = findViewById(R.id.next_step_mark);
-        nextStepMark.setImageResource(R.drawable.cross);
-        makeWinnerInfoBoxDefault();
-
         sharedGameViewModel = new ViewModelProvider(this).get(SharedGameViewModel.class);
-
-        RelativeLayout nextStepInfoBox = findViewById(R.id.next_step_info_box);
-        nextStepInfoBox.setVisibility(View.VISIBLE);
-
-        FrameLayout fragmentContainer = findViewById(R.id.fragment_container);
-        fragmentContainer.setVisibility(View.VISIBLE);
-
+        makeWinnerInfoBoxDefault();
+        displayNextStepInfoBox();
+        displayGameField();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new GameBoxFragment())
                     .commit();
         }
     }
+
+
+    private void displayNextStepInfoBox() {
+        ImageView nextStepMark = findViewById(R.id.next_step_mark);
+        nextStepMark.setImageResource(R.drawable.cross);
+        RelativeLayout nextStepInfoBox = findViewById(R.id.next_step_info_box);
+        nextStepInfoBox.setVisibility(View.VISIBLE);
+    }
+
+    public void startWinAnimation(){
+        Animation winAnimation = AnimationUtils.loadAnimation(this, R.anim.win_animation);
+        fragmentContainer.startAnimation(winAnimation);
+    }
+
 
     private boolean isDarkTheme() {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -75,5 +105,12 @@ public class MainActivity extends AppCompatActivity {
         params.setMargins(params.leftMargin, ViewGroup.LayoutParams.WRAP_CONTENT, params.rightMargin, params.bottomMargin);
         winnerInfoBox.setLayoutParams(params);
         winnerInfoBox.setVisibility(View.GONE);
+    }
+
+    private void displayGameField(){
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale_animation);
+        fragmentContainer = findViewById(R.id.fragment_container);
+        fragmentContainer.startAnimation(anim);
+        fragmentContainer.setVisibility(View.VISIBLE);
     }
 }

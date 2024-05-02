@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyTicTacToe</string>
     <string name="btn_start_game_text">Начать игру</string>
+    <string name="btn_restart_game_text">Начать заново</string>
     <string name="tv_next_step_text">Следующий ход:</string>
     <string name="winner_is_text">Победитель:</string>
     <string name="drawn_game_text">Ничья!</string>

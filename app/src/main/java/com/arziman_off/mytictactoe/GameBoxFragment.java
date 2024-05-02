@@ -115,6 +115,7 @@ public class GameBoxFragment extends Fragment {
     private void endCurrentGame() {
         getActivity().findViewById(R.id.next_step_info_box).setVisibility(View.GONE);
         Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.scale_animation);
+        ((MainActivity)getActivity()).startWinAnimation();
         if (!game.isDrawnGame()){
             List<int[]> indexes = game.getIndexesOfWinningCells();
 
@@ -142,8 +143,6 @@ public class GameBoxFragment extends Fragment {
             winnerInfoBoxMark.setImageResource(game.getWinner().getMark());
         }
         winnerInfoBox.setVisibility(View.VISIBLE);
-
-        game.setGameIsValid(false);
     }
 
     @NonNull
