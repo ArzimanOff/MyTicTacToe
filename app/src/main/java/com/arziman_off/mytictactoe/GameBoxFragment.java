@@ -128,11 +128,13 @@ public class GameBoxFragment extends Fragment {
                 }
             }
         }
+        displayWinnerInfoBox(anim);
+    }
 
+    private void displayWinnerInfoBox(Animation anim) {
         RelativeLayout winnerInfoBox = getActivity().findViewById(R.id.winner_info_box);
         ImageView winnerInfoBoxMark = getActivity().findViewById(R.id.winner_info_box_mark);
         TextView winnerInfoBoxText = getActivity().findViewById(R.id.winner_info_box_text);
-
         winnerInfoBox.startAnimation(anim);
         RelativeLayout.LayoutParams winnerInfoBoxParams = getNewLayoutParams(winnerInfoBox);
         winnerInfoBox.setLayoutParams(winnerInfoBoxParams);
@@ -140,8 +142,11 @@ public class GameBoxFragment extends Fragment {
             winnerInfoBoxMark.setVisibility(View.GONE);
             winnerInfoBoxText.setText(R.string.drawn_game_text);
         } else {
+            winnerInfoBoxMark.setVisibility(View.VISIBLE);
+            winnerInfoBoxText.setText(R.string.winner_is_text);
             winnerInfoBoxMark.setImageResource(game.getWinner().getMark());
         }
+
         winnerInfoBox.setVisibility(View.VISIBLE);
     }
 
