@@ -4,6 +4,84 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <LinearLayout
+        android:id="@+id/game_mode_chooser_box"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/start_game_button"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/rounded_white_bg"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:checkedButton="@+id/p2p_classic_mode"
+            android:id="@+id/toggle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/blue_out_line"
+            android:orientation="horizontal">
+
+
+            <RadioButton
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginStart="1dp"
+                android:id="@+id/p2p_classic_mode"
+                android:background="@drawable/toggle_widget_background"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/p2p_classic_mode_text"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+
+            <RadioButton
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:id="@+id/p2p_mode_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/p2p_mode_1_text"
+                android:textSize="11sp"
+                android:textColor="@color/dark_blue" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/mode_description_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/game_mode_rules_classic"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/gray"
+            />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/next_step_info_box"
         android:layout_width="300dp"
@@ -14,7 +92,7 @@
         android:background="@drawable/rounded_white_bg"
         android:padding="20dp"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         >
 
         <TextView
@@ -48,7 +126,7 @@
         android:background="@drawable/rounded_white_bg"
         android:padding="20dp"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         >
 
         <TextView
@@ -74,6 +152,17 @@
 
     </RelativeLayout>
 
+
+
+    <FrameLayout
+    android:id="@+id/fragment_container"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:layout_centerInParent="true"
+    android:background="@drawable/rounded_white_bg"
+    android:visibility="gone"
+    tools:visibility="gone"
+    />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/start_game_button"
@@ -103,16 +192,6 @@
         android:textColor="#1A7DCC"
         android:visibility="gone"
         tools:visibility="gone"
-        />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/rounded_white_bg"
-        android:visibility="gone"
-        tools:visibility="visible"
         />
 
 </RelativeLayout>
